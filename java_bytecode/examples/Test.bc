@@ -1,0 +1,65 @@
+Classfile /c:/Users/Dario/Desktop/Bytecode/examples/Test.class
+  Last modified 2016-11-03; size 382 bytes
+  MD5 checksum 4bde22bc9e780b8fe2566c68b6c307ed
+  Compiled from "Test.java"
+public class Test
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #4.#17         // java/lang/Object."<init>":()V
+   #2 = Fieldref           #3.#18         // Test.name:Ljava/lang/String;
+   #3 = Class              #19            // Test
+   #4 = Class              #20            // java/lang/Object
+   #5 = Utf8               name
+   #6 = Utf8               Ljava/lang/String;
+   #7 = Utf8               <init>
+   #8 = Utf8               ()V
+   #9 = Utf8               Code
+  #10 = Utf8               LineNumberTable
+  #11 = Utf8               getName
+  #12 = Utf8               ()Ljava/lang/String;
+  #13 = Utf8               setName
+  #14 = Utf8               (Ljava/lang/String;)V
+  #15 = Utf8               SourceFile
+  #16 = Utf8               Test.java
+  #17 = NameAndType        #7:#8          // "<init>":()V
+  #18 = NameAndType        #5:#6          // name:Ljava/lang/String;
+  #19 = Utf8               Test
+  #20 = Utf8               java/lang/Object
+{
+  public Test();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public java.lang.String getName();
+    descriptor: ()Ljava/lang/String;
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #2                  // Field name:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 4: 0
+
+  public void setName(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #2                  // Field name:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 5: 0
+}
+SourceFile: "Test.java"
