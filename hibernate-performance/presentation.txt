@@ -1,0 +1,92 @@
+1. Introduction
+
+Hibernate is a very complex framework with many subtleties that require a thorough knowledge of both database systems,
+JDBC, and the framework itself.
+
+
+3. Monitoring
+
+ 3.1 SQL statement logging
+ 
+ SQL statement logging becomes relevant from the early stages of application development.
+ The bind parameter values are not available when the statement gets printed into the log.
+ 
+ Configuration:
+ 
+ hibernate.show_sql=true
+  
+ Example:
+ 
+ 
+ 3.2 Hibernate statistics
+ 
+ Built-in statistics collector
+ Summary of the most important metrics at the end of the session
+ Disabled by default for performance reasons
+ 
+ 
+ 
+ Configuration:
+ 
+ hibernate.generate_statistics=true
+  
+ Example:
+  
+ 37125102 nanoseconds spent acquiring 10000 JDBC connections;
+ 25521714 nanoseconds spent releasing 10000 JDBC connections;
+ 95242323 nanoseconds spent preparing 10000 JDBC statements;
+ 923615040 nanoseconds spent executing 10000 JDBC statements;
+ 
+ 
+ 3.3 Datasource proxy
+
+ Datasource-proxy provides support for custom JDBC statement execution listeners.
+ Provides extended sql logging (shows parameters, groups parameters in batch statement)
+ Allowes building query count validators preventing N+1 query problems during the development phase. 
+ 
+ Configuration:
+ 
+	<dependency>
+	   <groupId>net.ttddyy</groupId>
+	   <artifactId>datasource-proxy</artifactId>
+	   <version>1.4.1</version>
+	</dependency>
+	
+ 	@Bean
+	@Primary
+	@Profile("test")
+	public DataSource proxyDataSource() {
+		return ProxyDataSourceBuilder
+	        .create(actualDataSource())
+	        .logQueryBySlf4j(SLF4JLogLevel.INFO)
+	        .countQuery()
+	        .build();
+	}
+	
+Example:	
+
+    QueryCountHolder.clear();
+    List<Device> data = repository.findAll();
+    assertEquals(1, QueryCountHolder.getGrandTotal().getSelect());
+
+
+4. Primary Key Identifiers
+
+5. Batching
+
+ - adding new objects
+ 
+6. Balk updates 
+ 
+ - updation
+ - deletions
+
+5. OneToOne
+
+6. OneToMany
+
+7. N+1 Problem
+
+8. Projections
+
+VII. 

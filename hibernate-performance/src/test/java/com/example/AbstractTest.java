@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.junit.runner.RunWith;
@@ -47,7 +48,9 @@ public abstract class AbstractTest {
 		method.run();
 		
 		long result = System.currentTimeMillis() - startTime;
-		System.out.println("TIME [" + title + "]: " + result);
+		if (title != null) {
+			System.out.println("TIME [" + title + "]: " + result);
+		}
 		return result;
 	}
 	
@@ -59,7 +62,7 @@ public abstract class AbstractTest {
 		return result;
 	}
 	
-	protected <T> void createAndPersist(Class<T> clazz, int count, int batchSize, String title) throws Exception {
+	protected <T> List<T> createAndPersist(Class<T> clazz, int count, int batchSize, String title) throws Exception {
 		List<T> data = create(clazz, count);
 		doInJPA(() -> {
 			setBatchSize(batchSize);
@@ -72,6 +75,15 @@ public abstract class AbstractTest {
 				}
 			}
 		}, title);
+		
+		return data;
+	}
+	
+	protected void deleteAll(Class<?> clazz) {
+		doInJPA(() -> {
+			Query query = em.createQuery("Delete from " + clazz.getSimpleName());
+			query.executeUpdate();
+		}, null);
 	}
 	
 	protected <T> T newInstance(Class<T> clazz, int index) throws Exception {

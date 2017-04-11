@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,9 @@ public class Person extends BaseEntity {
 	
 	private String name;
 	
-	Person() {}
+	public Person() {
+		this("Person: " + ThreadLocalRandom.current().nextInt());
+	}
 	
 	public Person(String name) {
 		this.name = name;

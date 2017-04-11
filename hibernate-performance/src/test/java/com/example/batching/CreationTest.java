@@ -1,4 +1,4 @@
-package com.example.id_generation;
+package com.example.batching;
 
 import org.junit.Test;
 
@@ -6,11 +6,23 @@ import com.example.AbstractTest;
 import com.example.domain.id_generation.HiloSequence;
 import com.example.domain.id_generation.Identity;
 
-public class BatchingTest extends AbstractTest {
+public class CreationTest extends AbstractTest {
 
 	// Doc: https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/chapters/batch/Batching.html
 	
 	private static int OBJ_COUNT = 10_000;
+	
+	@Test
+	public void testNaiveAdding() throws Exception {
+		time(() -> {
+			for (int i = 0; i < OBJ_COUNT; i++) {
+				doInJPA(() -> {
+					em.persist(new Identity());
+				}, null);
+				
+			}
+		}, "Naive Way");
+	}
 	
 	@Test
 	public void testHiLoSequence_batch_10() throws Exception {

@@ -26,7 +26,7 @@ public class HibernatePerformanceApplication {
 		DataSource actualDataSource = props.initializeDataSourceBuilder().build();
 		return ProxyDataSourceBuilder
 	        .create(actualDataSource)
-	        .logQueryBySlf4j(SLF4JLogLevel.INFO)
+//	        .logQueryBySlf4j(SLF4JLogLevel.INFO)
 	        .countQuery()
 	        .build();
 	}
