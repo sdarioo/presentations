@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- use Spring default values -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <property
+            name="SQL_CONSOLE_LOG_PATTERN"
+            value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%m){blue}%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- Appender for logging SQL queries -->
+    <appender name="SQL" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${SQL_CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="SQL" />
+    </logger>
+    <logger name="org.hibernate.engine.internal.StatisticalLoggingSessionEventListener" level="INFO" additivity="false">
+        <appender-ref ref="SQL" />
+    </logger>
+
+    <!-- By default, the level of the root level is set to DEBUG -->
+    <!--root level="ERROR">
+        <appender-ref ref="CONSOLE" />
+    </root-->
+
+</configuration>
