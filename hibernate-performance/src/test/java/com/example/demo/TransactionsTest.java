@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 		"spring.jpa.properties.hibernate.generate_statistics=false"})
 public class TransactionsTest extends AbstractTest {
 	
-	private static int OBJ_COUNT = 100_000;
+	private static int OBJ_COUNT = 10_000;
 	
 	@Autowired
 	private PostRepository repository;
@@ -47,7 +47,6 @@ public class TransactionsTest extends AbstractTest {
 	private void selectInDefaultTransaction() {
 		time(repository::findAll, "Select_DefaultTransaction");
 	}
-
 
 	@Transactional(readOnly=true)
 	private void selectInReadOnlyTransaction() {

@@ -1,59 +1,50 @@
 package com.example.demo;
 
 import com.example.demo.domain.Comment;
-import com.example.demo.domain.CommentDetails;
 import com.example.demo.domain.Post;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
+import javax.persistence.TypedQuery;
 
+@SpringBootTest(properties = {
+        "logging.level.org.hibernate.SQL=ERROR",
+        "spring.jpa.properties.hibernate.generate_statistics=false"})
 public class FetchTest extends AbstractTest {
 
-    @Before
-    public void setUp() {
-        TestUtil.initDb(em, 1, 2);
-    }
-
-    @After
-    public void tearDown() {
-        deleteAll();
+    @AfterClass
+    public static void printStats() {
+        AbstractTest.printStatistics();
     }
 
     @Test
-    @Transactional
-    public void fetchStrategies() {
+    public void testAll() {
 
-        //Post post = em.find(Post.class, 10);
-        //List<Comment> comments = post.getComments();
+        doInJPA(() -> {
+            TestUtil.initDb(em, 100_000, 1);
+        }, "Init");
 
+        doInJPA(() -> {
+            TypedQuery<Comment> q = em.createQuery("select c from Comment c join fetch c.post", Comment.class);
+            q.getResultList();
+        }, "Select with JOIN FETCH");
 
-//        Query query = em.createQuery("SELECT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id = 10");
-//        Post post = (Post)query.getSingleResult();
-//        List<Comment> comments = post.getComments();
+        doInJPA(() -> {
+            TypedQuery<Comment> q = em.createQuery("select c from Comment c", Comment.class);
+            q.getResultList();
+        }, "Select with N+1 Problem");
 
+        doInJPA(() -> {
+            TypedQuery<Post> q = em.createQuery("select p from Post p", Post.class);
+            q.getResultList();
+        }, "Select LAZY");
 
-//        // Eager JOIN
-//        Comment comment = em.find(Comment.class, 30);
-//        assertNotNull(comment);
-//
-//        em.clear();
-//
-//        // Eager SELECT
-//        comment = (Comment)em.createQuery("SELECT c from Comment c WHERE c.id = 30").getSingleResult();
-//        assertNotNull(comment);
-
-
-        em.createQuery("SELECT c from Comment c JOIN FETCH c.post");
-
-
+        deleteAll();
     }
-
 
     private void deleteAll() {
         deleteAll(Comment.class);
         deleteAll(Post.class);
-        deleteAll(CommentDetails.class);
     }
 }

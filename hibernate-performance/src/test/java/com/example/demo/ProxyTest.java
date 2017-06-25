@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.domain.Comment;
-import com.example.demo.domain.CommentDetails;
 import com.example.demo.domain.Post;
 import net.ttddyy.dsproxy.QueryCountHolder;
 import org.junit.After;
@@ -29,7 +28,6 @@ public class ProxyTest extends AbstractTest {
     }
 
     @Transactional
-
     @Test
     public void validateQueryCount() {
         QueryCountHolder.clear();
@@ -44,6 +42,5 @@ public class ProxyTest extends AbstractTest {
     private void deleteAll() {
         deleteAll(Comment.class);
         deleteAll(Post.class);
-        deleteAll(CommentDetails.class);
     }
 }

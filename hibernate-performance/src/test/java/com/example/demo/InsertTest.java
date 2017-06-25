@@ -9,6 +9,9 @@ import org.junit.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +22,7 @@ public class InsertTest extends AbstractTest {
 
 	// Doc: https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/chapters/batch/Batching.html
 	
-	private static int OBJ_COUNT = 100_000;
+	private static int OBJ_COUNT = 10_000;
 
 	@Autowired
 	private PostRepository postRepository;
@@ -90,30 +93,4 @@ public class InsertTest extends AbstractTest {
 	}
 
 
-
-//	@Test
-//	public void testHiLoSequence_batch_10() throws Exception {
-//		createAndPersist(HiloSequence.class, OBJ_COUNT, 10, "Sequence (batch_size=10)");
-//	}
-//
-//	@Test
-//	public void testHiLoSequence_batch_30() throws Exception {
-//		createAndPersist(HiloSequence.class, OBJ_COUNT, 30, "Sequence (batch_size=30)");
-//	}
-
-//	@Test
-//	public void testHiLoSequence_batch_50() throws Exception {
-//		createAndPersist(Sequence.class, OBJ_COUNT, 50, "Sequence (batch_size=50)");
-//	}
-//
-//	@Test
-//	public void testHiLoSequence_batch_100() throws Exception {
-//		createAndPersist(HiloSequence.class, OBJ_COUNT, 100, "Sequence (batch_size=100)");
-//	}
-//
-//	@Test
-//	public void testIdentity_batch_100() throws Exception {
-//		createAndPersist(Identity.class, OBJ_COUNT, 50, "Identity (batch_size=50)");
-//	}
-	
 }

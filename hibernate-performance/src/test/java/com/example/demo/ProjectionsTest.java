@@ -20,7 +20,7 @@ public class ProjectionsTest extends AbstractTest {
 	@Autowired
 	private PostRepository postRepository;
 	
-	private static int OBJ_COUNT = 10_000;
+	private static int OBJ_COUNT = 100_000;
 	
 	
 	@Test
@@ -62,12 +62,7 @@ public class ProjectionsTest extends AbstractTest {
 	}
 
 	public void findProjectionWithQuery() {
-
 		Runnable r = () -> {
-
-			TypedQuery<IdTitle> q = em.createQuery("select new IdTitle(p.id, p.title) from Post p", IdTitle.class);
-			List<IdTitle> list = q.getResultList();
-
 			TypedQuery<IdTitle> query = em.createQuery("select new com.example.demo.domain.IdTitle(p.id, p.title) from Post p", IdTitle.class);
 			List<IdTitle> result = query.getResultList();
 			assertEquals(OBJ_COUNT, result.size());
